@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Baladeyti</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="open">Open</string>
+    <string name="close">Close</string>
+    <string name="baladeya">Baladeyti</string>
+
+    <string name="facebook_app_id">774975873889017</string>
+    <string name="fb_login_protocol_scheme">fb1234</string>
+    <string name="facebook_client_token">22423e91fb0d16379caf37eff0ddfec1</string>
+
+
+</resources>
