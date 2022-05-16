@@ -1,19 +1,39 @@
 package com.example.baladeyti.activities
 
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import android.util.Patterns
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.EditText
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.baladeyti.R
 import com.example.baladeyti.databinding.ActivitySignUpBinding
+import com.example.baladeyti.models.Claim
+import com.example.baladeyti.models.User
+import com.example.baladeyti.models.UserRequest
+import com.example.baladeyti.models.UserResetResponse
+import com.example.baladeyti.services.ApiClaim
+import com.example.baladeyti.services.ApiUser
+import com.google.android.material.button.MaterialButton
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
-class SignUpActivity : AppCompatActivity(), View.OnClickListener, View.OnFocusChangeListener,
-    View.OnKeyListener {
+class SignUpActivity : AppCompatActivity() {
 
     lateinit var mSharedPref: SharedPreferences
+    lateinit var signupbtn: MaterialButton
+    private lateinit var email: EditText
+    private lateinit var password: EditText
+    private lateinit var confirmPassword: EditText
 
     private lateinit var mBinding: ActivitySignUpBinding
 
@@ -28,7 +48,65 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener, View.OnFocusCh
         setContentView(mBinding.root)
         supportActionBar?.hide()
 
+        signupbtn = findViewById(R.id.signupbtn)
+        email = findViewById(R.id.email)
+        password = findViewById(R.id.password)
+        confirmPassword = findViewById(R.id.confirmPassword)
 
+        signupbtn.setOnClickListener {
+            if ( validateEmail() && validatePassword() && validateConfirmPassword()&& validatePasswordAndConfirmPassword()){
+
+                val email = email.text.toString().trim()
+                val pass = password.text.toString().trim()
+                val confirm= confirmPassword.text.toString().trim()
+
+                val data: LinkedHashMap<String, RequestBody> = LinkedHashMap()
+
+
+                data["emailAddress"] = RequestBody.create(MultipartBody.FORM, email)
+                data["password"] = RequestBody.create(MultipartBody.FORM, pass)
+
+                val apiUser = ApiUser.create().userSignUp(data)
+                apiUser.enqueue(object : Callback<User> {
+                    override fun onResponse(
+                        call: Call<User>,
+                        response: Response<User>
+                    ) {
+                        if (response.isSuccessful) {
+                            Toast.makeText(this@SignUpActivity, "good", Toast.LENGTH_LONG).show()
+                            Log.i("Create User", response.body()!!.toString())
+
+
+
+
+                            val intent = Intent(this@SignUpActivity, MainActivity::class.java)
+                            intent.flags =
+                                Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                            startActivity(intent)
+
+
+
+
+                        } else {
+                            Toast.makeText(
+                                applicationContext,
+                                "Error creating User",
+                                Toast.LENGTH_LONG
+                            ).show()
+                            Log.i("API RESPONSE", response.toString())
+                            Log.i("Claim response", response.body().toString())
+                        }
+                    }
+
+                    override fun onFailure(call: Call<User>, t: Throwable) {
+                        Toast.makeText(this@SignUpActivity, "SERVER ERROR", Toast.LENGTH_LONG).show()
+                    }
+
+
+                })
+
+            }
+        }
     }
 
 
@@ -58,7 +136,7 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener, View.OnFocusCh
 
     private fun validateEmail(): Boolean {
         var errorMessage: String? = null
-        val value: String = mBinding.username.text.toString()
+        val value: String = mBinding.email.text.toString()
         if (value.isEmpty()) {
             errorMessage = "Email is required"
         } else if (!Patterns.EMAIL_ADDRESS.matcher(value).matches()) {
@@ -66,7 +144,7 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener, View.OnFocusCh
         }
 
         if (errorMessage != null) {
-            mBinding.username.apply {
+            mBinding.email.apply {
 
                 error = errorMessage
             }
@@ -86,9 +164,6 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener, View.OnFocusCh
         return error == null
     }
 
-    override fun onClick(p0: View?) {
-        TODO("Not yet implemented")
-    }
 
 //    override fun onFocusChange(view: View?, hasFocus: Boolean) {
 //        if (view != null) {
@@ -118,11 +193,5 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener, View.OnFocusCh
 //        }
 //    }
 
-    override fun onKey(view: View?, event: Int, keyEvent: KeyEvent?): Boolean {
-        TODO("Not yet implemented")
-    }
 
-    override fun onFocusChange(p0: View?, p1: Boolean) {
-        TODO("Not yet implemented")
-    }
 }

@@ -56,7 +56,7 @@ class HomeActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        supportActionBar?.hide()
+
 
         val accessToken = AccessToken.getCurrentAccessToken()
         val isLoggedIn = accessToken != null && !accessToken.isExpired
@@ -118,6 +118,7 @@ class HomeActivity : AppCompatActivity() {
             toggle.syncState()
 
             supportActionBar?.setDisplayHomeAsUpEnabled(true)
+            supportActionBar?.hide()
 
 
             drawerNavView.setNavigationItemSelectedListener {
@@ -167,7 +168,8 @@ class HomeActivity : AppCompatActivity() {
                             "Clicked on Disconnect",
                             Toast.LENGTH_SHORT
                         ).show()
-                        mSharedPref.edit().clear()
+                        mSharedPref.edit().clear().commit()
+                        println(mSharedPref)
                         Intent(this, MainActivity::class.java).also {
                             startActivity(it)
                         }
@@ -207,7 +209,7 @@ class HomeActivity : AppCompatActivity() {
 
 
             /*val picStr: String = mSharedPref.getString("photos", "my photos").toString()
-            val picStrr = "http://10.0.2.2:3000/upload/" + picStr.split("/")[4]
+            val picStrr = "http://192.168.1.12:3000/upload/" + picStr.split("/")[4]
             Glide.with(this).load(Uri.parse(picStrr)).into(imagedrawer)
             usernamedrawer.text = name
             emaildrawer.text = email*/

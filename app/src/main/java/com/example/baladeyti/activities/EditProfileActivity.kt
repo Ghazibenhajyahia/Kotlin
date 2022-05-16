@@ -35,6 +35,7 @@ class EditProfileActivity : AppCompatActivity() {
     private lateinit var firstName: EditText
     private lateinit var emailAddress: EditText
     private lateinit var phoneNumber: EditText
+    private lateinit var cin: EditText
     private lateinit var profileimage: ImageView
     lateinit var buttonUpdate: MaterialButton
     lateinit var mSharedPref: SharedPreferences
@@ -52,8 +53,12 @@ class EditProfileActivity : AppCompatActivity() {
 
         profileimage = findViewById(R.id.profileimage)
         val picStr: String = mSharedPref.getString("photos", "my photos").toString()
-        val picStrr="http://10.0.2.2:3000/upload/"+picStr.split("/")[4]
-        Glide.with(this).load(Uri.parse(picStrr)).into(profileimage)
+        println(picStr)
+        if(picStr != "my photos"){
+            val picStrr="http://192.168.1.7/upload/"+picStr.split("/")[4]
+            Glide.with(this).load(Uri.parse(picStrr)).into(profileimage)
+        }
+
 
 
 
@@ -73,6 +78,10 @@ class EditProfileActivity : AppCompatActivity() {
         val phone: String = mSharedPref.getString("phoneNumber", "telephone number").toString()
         phoneNumber = findViewById(R.id.Number)
         phoneNumber.setText(phone)
+
+        val numberNational: String = mSharedPref.getString("cin", "cin").toString()
+        cin = findViewById(R.id.cin)
+        cin.setText(numberNational)
 
         buttonUpdate = findViewById(R.id.buttonUpdate)
         imagePicker = findViewById(R.id.profileimage)
@@ -96,6 +105,7 @@ class EditProfileActivity : AppCompatActivity() {
             val myFirstName = firstName.text.toString().trim()
             val myLastName = lastName.text.toString().trim()
             val myPhoneNumber = phoneNumber.text.toString().trim()
+            val myCin = cin.text.toString().trim()
 
             if (myEmailAddress.isEmpty()) {
                 emailAddress.error = "Email required"
@@ -118,7 +128,13 @@ class EditProfileActivity : AppCompatActivity() {
                 phoneNumber.requestFocus()
                 return@setOnClickListener
             }
-            /*if (selectedImageUri == null) {
+
+            if (myCin.isEmpty()) {
+                phoneNumber.error = "cin required"
+                phoneNumber.requestFocus()
+                return@setOnClickListener
+            }
+           /* if (selectedImageUri == null) {
                 applicationContext.snackbar("Select an Image First")
                 return@setOnClickListener
             }*/
@@ -134,6 +150,7 @@ class EditProfileActivity : AppCompatActivity() {
                 myFirstName,
                 myLastName,
                 myPhoneNumber,
+                myCin,
                 _id
             )
             print(parcelFileDescriptor);
@@ -146,7 +163,7 @@ class EditProfileActivity : AppCompatActivity() {
     }
 
 
-    private fun update(myEmailAddress: String, myFirstName: String, myLastName: String, myPhoneNumber: String,id: String){
+    private fun update(myEmailAddress: String, myFirstName: String, myLastName: String, myPhoneNumber: String, myCin: String,id: String){
 
         if(selectedImageUri == null){
             println("image null")
@@ -180,6 +197,7 @@ class EditProfileActivity : AppCompatActivity() {
         data["firstName"] = RequestBody.create(MultipartBody.FORM, myFirstName)
         data["emailAddress"] = RequestBody.create(MultipartBody.FORM, myEmailAddress)
         data["phoneNumber"] = RequestBody.create(MultipartBody.FORM, myPhoneNumber)
+        data["cin"] = RequestBody.create(MultipartBody.FORM, myCin)
 
         if (photos != null) {
             println("Ahla ena image : $photos")

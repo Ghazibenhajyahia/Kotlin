@@ -34,7 +34,7 @@ interface ApiUser {
     ): Call<UserAndToken>
 
 
-
+    @Multipart
     @POST("users")
     fun userSignUp(
         @PartMap data : LinkedHashMap<String, RequestBody>,
@@ -52,7 +52,7 @@ interface ApiUser {
         fun create(): ApiUser {
             val retrofit = Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl("http://192.168.1.5:3000")
+                .baseUrl("http://192.168.1.7:3000")
                 .build()
             return retrofit.create(ApiUser::class.java)
 

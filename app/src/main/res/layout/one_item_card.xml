@@ -34,7 +34,7 @@
                 android:layout_gravity="center"
                 android:layout_marginStart="10dp"
                 android:text="Municipality Name"
-                android:textColor="#605E5E5E"
+                android:textColor="@color/primary"
                 android:textSize="14sp"
                 android:textStyle="bold" />
 
@@ -47,7 +47,7 @@
             android:layout_marginStart="25dp"
             android:layout_marginBottom="15dp"
             android:text="La Goulette"
-            android:textColor="@color/primary"
+            android:textColor="@color/black"
             android:textSize="18sp"
             android:textStyle="bold" />
 
@@ -75,7 +75,7 @@
                     android:layout_gravity="center"
                     android:layout_marginStart="10dp"
                     android:text="Phone Number"
-                    android:textColor="#605E5E5E"
+                    android:textColor="@color/primary"
                     android:textSize="14sp"
                     android:textStyle="bold" />
 
@@ -88,7 +88,7 @@
                 android:layout_marginStart="25dp"
                 android:layout_marginBottom="15dp"
                 android:text="71456654"
-                android:textColor="@color/primary"
+                android:textColor="@color/black"
                 android:textSize="18sp"
                 android:textStyle="bold" />
         </LinearLayout>
@@ -117,7 +117,7 @@
                     android:layout_gravity="center"
                     android:layout_marginStart="10dp"
                     android:text="Email"
-                    android:textColor="#605E5E5E"
+                    android:textColor="@color/primary"
                     android:textSize="14sp"
                     android:textStyle="bold" />
 
@@ -130,7 +130,7 @@
                 android:layout_marginStart="25dp"
                 android:layout_marginBottom="15dp"
                 android:text="ghazi.benhadjyahia@esprit.tn"
-                android:textColor="@color/primary"
+                android:textColor="@color/black"
                 android:textSize="18sp"
                 android:textStyle="bold" />
         </LinearLayout>

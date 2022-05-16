@@ -5,12 +5,12 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
+import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.example.baladeyti.R
 import com.example.baladeyti.activities.EditProfileActivity
@@ -58,7 +58,7 @@ class UserProfileFragment : Fragment() {
 
         idfullname = root.findViewById(R.id.idfullname)
 
-        idUrlImg= root.findViewById(R.id.idUrlImg)
+        idUrlImg = root.findViewById(R.id.idUrlImg)
 
         idEmail = root.findViewById(R.id.idEmail)
 
@@ -73,10 +73,16 @@ class UserProfileFragment : Fragment() {
         val phone: String = mSharedPref.getString("phoneNumber", "phone").toString()
         val cin: String = mSharedPref.getString("cin", "cin").toString()
 
-
         val picStr: String = mSharedPref.getString("photos", "my photos").toString()
-        val picStrr="http://10.0.2.2:3000/upload/"+picStr.split("/")[4]
-        Glide.with(this).load(Uri.parse(picStrr)).into(idUrlImg)
+        println(picStr)
+        if (picStr != null) {
+
+            val picStrr = "http://192.168.1.7:3000/upload/" + picStr.split("/")[4]
+            Glide.with(this).load(Uri.parse(picStrr)).into(idUrlImg)
+        } else {
+
+        }
+
         idfullname.text = firstName
         idEmail.text = email
         idphone.text = phone
