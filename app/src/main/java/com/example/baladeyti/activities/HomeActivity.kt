@@ -209,7 +209,7 @@ class HomeActivity : AppCompatActivity() {
 
 
             /*val picStr: String = mSharedPref.getString("photos", "my photos").toString()
-            val picStrr = "http://192.168.1.12:3000/upload/" + picStr.split("/")[4]
+            val picStrr = "https://baladeyti-application.herokuapp.com/upload/" + picStr.split("/")[4]
             Glide.with(this).load(Uri.parse(picStrr)).into(imagedrawer)
             usernamedrawer.text = name
             emaildrawer.text = email*/

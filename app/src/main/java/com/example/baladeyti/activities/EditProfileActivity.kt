@@ -10,6 +10,7 @@ import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.res.ResourcesCompat
 import com.bumptech.glide.Glide
 import com.example.baladeyti.R
 import com.example.baladeyti.models.userUpdateResponse
@@ -23,6 +24,8 @@ import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import www.sanju.motiontoast.MotionToast
+import www.sanju.motiontoast.MotionToastStyle
 
 class EditProfileActivity : AppCompatActivity() {
 
@@ -55,7 +58,7 @@ class EditProfileActivity : AppCompatActivity() {
         val picStr: String = mSharedPref.getString("photos", "my photos").toString()
         println(picStr)
         if(picStr != "my photos"){
-            val picStrr="http://192.168.1.7/upload/"+picStr.split("/")[4]
+            val picStrr="https://baladeyti-application.herokuapp.com/upload/"+picStr.split("/")[4]
             Glide.with(this).load(Uri.parse(picStrr)).into(profileimage)
         }
 
@@ -139,10 +142,14 @@ class EditProfileActivity : AppCompatActivity() {
                 return@setOnClickListener
             }*/
 
+            if(selectedImageUri != null){
+                println(selectedImageUri)
+                val parcelFileDescriptor =
+                    contentResolver.openFileDescriptor(selectedImageUri!!, "r", null)
+                        ?: return@setOnClickListener
 
-            val parcelFileDescriptor =
-                contentResolver.openFileDescriptor(selectedImageUri!!, "r", null)
-                    ?: return@setOnClickListener
+            }
+
             _id = mSharedPref.getString("id", "my id").toString()
 
             update(
@@ -153,7 +160,6 @@ class EditProfileActivity : AppCompatActivity() {
                 myCin,
                 _id
             )
-            print(parcelFileDescriptor);
 
         }
 
@@ -166,7 +172,18 @@ class EditProfileActivity : AppCompatActivity() {
     private fun update(myEmailAddress: String, myFirstName: String, myLastName: String, myPhoneNumber: String, myCin: String,id: String){
 
         if(selectedImageUri == null){
-            println("image null")
+            MotionToast.darkColorToast(
+                this,
+                "Error update :",
+                "Image should be changed",
+                MotionToastStyle.WARNING,
+                MotionToast.GRAVITY_TOP,
+                MotionToast.LONG_DURATION,
+                ResourcesCompat.getFont(
+                    this,
+                    www.sanju.motiontoast.R.font.helvetica_regular
+                )
+            )
 
             return
         }
@@ -209,7 +226,18 @@ class EditProfileActivity : AppCompatActivity() {
                 ) {
                     if(response.isSuccessful){
                         Log.i("onResponse goooood", response.body().toString())
-
+                        MotionToast.darkColorToast(
+                            this@EditProfileActivity,
+                            "Success ",
+                            "Account updated!",
+                            MotionToastStyle.SUCCESS,
+                            MotionToast.GRAVITY_TOP,
+                            MotionToast.LONG_DURATION,
+                            ResourcesCompat.getFont(
+                                this@EditProfileActivity,
+                                www.sanju.motiontoast.R.font.helvetica_regular
+                            )
+                        )
 
 
                         mSharedPref.edit().apply{
@@ -252,7 +280,7 @@ class EditProfileActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if(resultCode == Activity.RESULT_OK && requestCode == ImagePicker.REQUEST_CODE){
             selectedImageUri = data?.data
-            imagePicker?.setImageURI(selectedImageUri)
+            profileimage?.setImageURI(selectedImageUri)
 
         }
     }

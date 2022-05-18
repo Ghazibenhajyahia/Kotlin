@@ -45,11 +45,14 @@
 
                 <TextView
                     android:id="@+id/Municipalitys"
-                    android:layout_width="match_parent"
+                    android:layout_width="380dp"
                     android:layout_height="80dp"
-                    android:layout_margin="2dp"
                     android:layout_centerHorizontal="true"
-                    android:background="@drawable/municipality_banner"
+                    android:layout_marginStart="2dp"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginEnd="2dp"
+                    android:layout_marginBottom="2dp"
+                    android:background="@drawable/muni_222"
                     android:gravity="center_horizontal|center_vertical"
                     android:textSize="20dp"
                     android:textStyle="italic" />
@@ -78,15 +81,14 @@
 
                 <TextView
                     android:id="@+id/Articles"
-                    android:layout_width="match_parent"
+                    android:layout_width="380dp"
                     android:layout_height="80dp"
                     android:layout_centerHorizontal="true"
-                    android:layout_margin="2dp"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginEnd="20dp"
-                    android:layout_marginBottom="20dp"
-                    android:background="@drawable/daily_33"
+                    android:layout_marginStart="2dp"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginEnd="2dp"
+                    android:layout_marginBottom="2dp"
+                    android:background="@drawable/daily_222"
                     android:textColor="@color/black"
                     android:textSize="20dp"
                     android:textStyle="italic" />

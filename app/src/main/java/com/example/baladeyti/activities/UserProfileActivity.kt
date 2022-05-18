@@ -43,7 +43,7 @@ class UserProfileActivity : AppCompatActivity() {
 
 
         val picStr: String = mSharedPref.getString("photos", "my photos").toString()
-        val picStrr="http://192.168.1.7:3000/upload/"+picStr.split("/")[4]
+        val picStrr="https://baladeyti-application.herokuapp.com/upload/"+picStr.split("/")[4]
         Glide.with(this).load(Uri.parse(picStrr)).into(idUrlImg)
         idfullname.text = firstName
         idEmail.text = email

@@ -21,14 +21,18 @@ interface ApiClaim {
     ):Call<Claim>
 
 
+
     @GET("claims")
-    fun getUsers(): Response<List<Claim>>
+    fun getClaims(): Call<Claim>
+
+    @GET("claims/author/{id}")
+    fun getClaimsByAuthor( @Path("id") id:String): Call<Claim>
 
     companion object {
         fun create(): ApiClaim {
             val retrofit = Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl("http://192.168.1.7:3000")
+                .baseUrl("https://baladeyti-application.herokuapp.com")
                 .build()
             return retrofit.create(ApiClaim::class.java)
 

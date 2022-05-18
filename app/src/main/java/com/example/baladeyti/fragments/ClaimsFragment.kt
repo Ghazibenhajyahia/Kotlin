@@ -1,7 +1,6 @@
 package com.example.baladeyti.fragments
 
 import android.content.Context
-import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
@@ -12,25 +11,25 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.baladeyti.R
-import com.example.baladeyti.activities.DetailArticle
 import com.example.baladeyti.components.ArticleAdapter
+import com.example.baladeyti.components.ClaimAdapter
 import com.example.baladeyti.components.MunicipalityAdapter
 import com.example.baladeyti.models.Article
+import com.example.baladeyti.models.Claim
 import com.example.baladeyti.models.Municipality
 import com.example.baladeyti.services.ApiArticle
+import com.example.baladeyti.services.ApiClaim
 import com.example.baladeyti.services.ApiMunicipality
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class SettingsFragment  : Fragment(), ArticleAdapter.OnItemClickListener,MunicipalityAdapter.OnItemClickListener {
+class ClaimsFragment  : Fragment(), ClaimAdapter.OnItemClickListener{
     lateinit var mSharedPref: SharedPreferences
-
+    private lateinit var _id: String
     lateinit var recyclerView: RecyclerView
-    lateinit var recyclerView_b: RecyclerView
-    var municipalityList: MutableList<Municipality> = arrayListOf()
-    var articlesDispo: MutableList<Article> = arrayListOf()
-    lateinit var test: ArticleAdapter.OnItemClickListener
+    var claimList: MutableList<Claim> = arrayListOf()
+    lateinit var test: ClaimAdapter.OnItemClickListener
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -40,31 +39,23 @@ class SettingsFragment  : Fragment(), ArticleAdapter.OnItemClickListener,Municip
 
 
         // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_settings, container, false)
-        recyclerView = view.findViewById(R.id.recycler_viewArticleList)
-        recyclerView_b = view.findViewById(R.id.recycler_viewMunicipalityList)
+        val view = inflater.inflate(R.layout.fragment_claims, container, false)
+        recyclerView = view.findViewById(R.id.recycler_viewClaimList)
 
+        mSharedPref = view.context!!.getSharedPreferences("UserPref", Context.MODE_PRIVATE)
+
+        _id = mSharedPref.getString("id", "my id").toString()
 
         recyclerView.layoutManager = LinearLayoutManager(activity,
             LinearLayoutManager.VERTICAL,false)
         recyclerView.setHasFixedSize(true)
-        getNewsData { newss: List<Article> ->
-            articlesDispo = newss as MutableList<Article>
+        getNewsData { newss: List<Claim> ->
+            claimList = newss as MutableList<Claim>
 
-            recyclerView.adapter = ArticleAdapter(newss, this)
+            recyclerView.adapter = ClaimAdapter(newss, this,savedInstanceState,view.context)
         }
-        mSharedPref = view.context!!.getSharedPreferences("UserPref", Context.MODE_PRIVATE)
 
 
-        recyclerView_b.layoutManager = LinearLayoutManager(activity,
-            LinearLayoutManager.HORIZONTAL,false)
-        recyclerView_b.setHasFixedSize(true)
-        getNewsData_Municipality { newss: List<Municipality> ->
-            municipalityList = newss as MutableList<Municipality>
-
-            recyclerView_b.adapter = MunicipalityAdapter(newss, this)
-        }
-        mSharedPref = view.context!!.getSharedPreferences("UserPref", Context.MODE_PRIVATE)
 
 //        if (!mSharedPref.getBoolean("isVerified", false)) {
 //            val apiInterfacee = ApiMunicipality.create()
@@ -132,13 +123,13 @@ class SettingsFragment  : Fragment(), ArticleAdapter.OnItemClickListener,Municip
 
         return view
     }
-    private fun getNewsData(callback: (List<Article>) -> Unit) {
-        val apiInterface = ApiArticle.create()
+    private fun getNewsData(callback: (List<Claim>) -> Unit) {
+        val apiInterface = ApiClaim.create()
 
-        apiInterface.getArticles().enqueue(object: Callback<Article> {
-            override fun onResponse(call: Call<Article>, response: Response<Article>) {
+        apiInterface.getClaimsByAuthor(_id).enqueue(object: Callback<Claim> {
+            override fun onResponse(call: Call<Claim>, response: Response<Claim>) {
                 if(response.code() == 200){
-                    return callback(response.body()!!.articles!!)
+                    return callback(response.body()!!.claims!!)
                     Log.i("yessss", response.body().toString())
                     //}
                 }else if(response.code() == 201){
@@ -148,7 +139,7 @@ class SettingsFragment  : Fragment(), ArticleAdapter.OnItemClickListener,Municip
                 }
             }
 
-            override fun onFailure(call: Call<Article>, t: Throwable) {
+            override fun onFailure(call: Call<Claim>, t: Throwable) {
                 t.printStackTrace()
                 println("OnFailure")
             }
@@ -157,43 +148,8 @@ class SettingsFragment  : Fragment(), ArticleAdapter.OnItemClickListener,Municip
     }
 
 
-    private fun getNewsData_Municipality(callback: (List<Municipality>) -> Unit) {
-        val apiInterface = ApiMunicipality.create()
 
-        apiInterface.getMunicipalitys().enqueue(object: Callback<Municipality> {
-            override fun onResponse(call: Call<Municipality>, response: Response<Municipality>) {
-                if(response.code() == 200){
-                    return callback(response.body()!!.municipalitys!!)
-                    Log.i("yessss", response.body().toString())
-                    //}
-                }else if(response.code() == 201){
-
-                }else {
-                    Log.i("nooooo", response.body().toString())
-                }
-            }
-
-            override fun onFailure(call: Call<Municipality>, t: Throwable) {
-                t.printStackTrace()
-                println("OnFailure")
-            }
-
-        })
-    }
-
-    override fun onItemClick_a(position: Int, property: List<Article>) {
-
-        val intent = Intent(activity, DetailArticle::class.java)
-        intent.putExtra("designation",property[position].designation)
-         intent.putExtra("text",property[position].text)
-         intent.putExtra("_id",property[position]._id)
-         intent.putExtra("date",property[position].date)
-         intent.putExtra("photos",property[position].photos)
-        startActivity(intent)
-
-    }
-
-    override fun onItemClick(position: Int, property: List<Municipality>) {
+    override fun onItemClick(position: Int, property: List<Claim>) {
         println("yo")
     }
     /*    private fun showAlertDialog(){

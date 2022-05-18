@@ -18,6 +18,7 @@ import com.example.baladeyti.components.MunicipalityAdapter
 import com.example.baladeyti.models.Municipality
 import com.example.baladeyti.services.ApiMunicipality
 import com.example.baladeyti.services.ApiUser
+import com.google.android.material.button.MaterialButton
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -26,7 +27,11 @@ import retrofit2.Response
 class HomeFragment : Fragment()/*,MunicipalityAdapter.OnItemClickListener */{
     lateinit var mSharedPref: SharedPreferences
 
+    private val favouritesFragment = FavouritesFragment()
+    private val settingsFragment = SettingsFragment()
     lateinit var recyclerView: RecyclerView
+    lateinit var complaintbtn: MaterialButton
+    lateinit var newsbtn: MaterialButton
     var filtredArticle: MutableList<Municipality> = arrayListOf()
     var articlesDispo: MutableList<Municipality> = arrayListOf()
     lateinit var test: MunicipalityAdapter.OnItemClickListener
@@ -40,6 +45,16 @@ class HomeFragment : Fragment()/*,MunicipalityAdapter.OnItemClickListener */{
 
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_home, container, false)
+
+        complaintbtn = view.findViewById(R.id.complaintbtn)
+        newsbtn = view.findViewById(R.id.newsbtn)
+
+        complaintbtn.setOnClickListener {
+            makeCurrentFragement(favouritesFragment)
+        }
+        newsbtn.setOnClickListener {
+            makeCurrentFragement(settingsFragment)
+        }
 //        recyclerView = view.findViewById(R.id.recycler_viewArticleList)
 //
 //        recyclerView.layoutManager = LinearLayoutManager(activity,LinearLayoutManager.HORIZONTAL,false)
@@ -166,4 +181,16 @@ class HomeFragment : Fragment()/*,MunicipalityAdapter.OnItemClickListener */{
 //        intent.putExtra("questionTitle", articles[position].question?.titre)*/
 //     /*   startActivity(intent)*/
 //    }
+
+
+
+    private fun makeCurrentFragement(fragment: Fragment) {
+        if (fragment != null) {
+            val transaction = activity?.supportFragmentManager?.beginTransaction()
+            transaction?.replace(R.id.fl_wrapper, fragment)
+            transaction?.addToBackStack(null);
+            transaction?.commit()
+        }
+
+    }
 }

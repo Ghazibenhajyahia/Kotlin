@@ -25,16 +25,15 @@
                 android:layout_height="30dp"
                 android:layout_marginStart="5dp"
                 android:padding="2dp"
-                android:src="@drawable/ic_home"
-                app:startIconTint="@color/design_default_color_secondary"/>
+                android:src="@drawable/building" />
 
             <TextView
-                android:id="@+id/name"
+                android:id="@+id/topic"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginStart="10dp"
-                android:text="Municipality Name"
+                android:text="Topic"
                 android:textColor="@color/primary"
                 android:textSize="14sp"
                 android:textStyle="bold" />
@@ -42,14 +41,14 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/idName"
+            android:id="@+id/idTopic"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="25dp"
             android:layout_marginBottom="15dp"
-            android:text="La Goulette"
-            android:textColor="@color/quaternary"
-            android:textSize="18sp"
+            android:text="Topic of complaint."
+            android:textColor="@color/black"
+            android:textSize="12sp"
             android:textStyle="bold" />
 
         <LinearLayout
@@ -63,19 +62,14 @@
                 android:orientation="horizontal"
                 android:padding="3dp">
 
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_marginStart="5dp"
-                    android:padding="2dp"
-                    android:src="@drawable/ic_baseline_local_phone_24" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+
                     android:layout_marginStart="10dp"
-                    android:text="Phone Number"
+                    android:text="Content"
                     android:textColor="@color/primary"
                     android:textSize="14sp"
                     android:textStyle="bold" />
@@ -83,14 +77,14 @@
             </LinearLayout>
 
             <TextView
-                android:id="@+id/idphone"
+                android:id="@+id/idContent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="25dp"
                 android:layout_marginBottom="15dp"
-                android:text="71456654"
-                android:textColor="@color/quaternary"
-                android:textSize="18sp"
+                android:text="Content of complaint."
+                android:textColor="@color/black"
+                android:textSize="12sp"
                 android:textStyle="bold" />
         </LinearLayout>
 
@@ -99,6 +93,8 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -106,34 +102,45 @@
                 android:padding="3dp">
 
                 <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
                     android:layout_marginStart="5dp"
                     android:padding="2dp"
-                    android:src="@drawable/ic_baseline_email_24" />
+                    android:src="@drawable/mapbox_compass_icon" />
 
                 <TextView
+                    android:id="@+id/position"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginStart="10dp"
-                    android:text="Email"
+                    android:text="Position"
                     android:textColor="@color/primary"
                     android:textSize="14sp"
                     android:textStyle="bold" />
 
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/idEmail"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="25dp"
-                android:layout_marginBottom="15dp"
-                android:text="ghazi.benhadjyahia@esprit.tn"
-                android:textColor="@color/quaternary"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+<!--            <TextView-->
+<!--                android:id="@+id/idPosition"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginStart="25dp"-->
+<!--                android:layout_marginBottom="15dp"-->
+<!--                android:text="Postion ! "-->
+<!--                android:textColor="@color/black"-->
+<!--                android:textSize="12sp"-->
+<!--                android:textStyle="bold" />-->
+
+            <com.mapbox.mapboxsdk.maps.MapView
+                android:id="@+id/idPosition"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginBottom="35dp"
+                android:layout_weight="2"
+                />
+
+
         </LinearLayout>
 
         <com.google.android.material.imageview.ShapeableImageView

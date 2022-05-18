@@ -11,7 +11,7 @@ data class Article(
     val articles: List<Article>?=null
 )
 data class ArticleRequest(
-    var article: Article?=null,
+    var articles: List<Article>?=null,
     var msg: String?=null,
     var succes: String?=null,
     var response: String?=null,

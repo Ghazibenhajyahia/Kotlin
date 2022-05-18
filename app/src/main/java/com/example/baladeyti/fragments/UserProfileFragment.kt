@@ -16,16 +16,10 @@ import com.example.baladeyti.R
 import com.example.baladeyti.activities.EditProfileActivity
 import com.google.android.material.imageview.ShapeableImageView
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [UserProfileFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
+
+
+
 class UserProfileFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
@@ -34,18 +28,15 @@ class UserProfileFragment : Fragment() {
     lateinit var mSharedPref: SharedPreferences
     lateinit var idfullname: TextView
     lateinit var idUrlImg: ShapeableImageView
+    private val claimsFragment = ClaimsFragment()
+    private val extraitFragment = ExtraitFragment()
     lateinit var idEmail: TextView
     lateinit var idphone: TextView
+    lateinit var idclaims: TextView
+    lateinit var idArticles: TextView
     lateinit var idcin: TextView
     lateinit var ic_profileSettings: ImageButton
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -64,6 +55,10 @@ class UserProfileFragment : Fragment() {
 
         idphone = root.findViewById(R.id.idphone)
 
+        idclaims = root.findViewById(R.id.idclaims)
+
+        idArticles = root.findViewById(R.id.idArticles)
+
         idcin = root.findViewById(R.id.idcin)
 
         ic_profileSettings = root.findViewById(R.id.ic_profileSettings)
@@ -77,7 +72,7 @@ class UserProfileFragment : Fragment() {
         println(picStr)
         if (picStr != null) {
 
-            val picStrr = "http://192.168.1.7:3000/upload/" + picStr.split("/")[4]
+            val picStrr = "https://baladeyti-application.herokuapp.com/upload/" + picStr.split("/")[4]
             Glide.with(this).load(Uri.parse(picStrr)).into(idUrlImg)
         } else {
 
@@ -94,26 +89,24 @@ class UserProfileFragment : Fragment() {
             }
         }
 
+        idclaims.setOnClickListener {
+            makeCurrentFragement(claimsFragment)
+        }
+
+        idArticles.setOnClickListener {
+            makeCurrentFragement(extraitFragment)
+        }
+
         return root
     }
+    private fun makeCurrentFragement(fragment: Fragment) {
+        if (fragment != null) {
+            val transaction = activity?.supportFragmentManager?.beginTransaction()
+            transaction?.replace(com.example.baladeyti.R.id.fl_wrapper, fragment)
+            transaction?.addToBackStack(null);
+            transaction?.commit()
+        }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment UserProfileFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            UserProfileFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
     }
+
 }

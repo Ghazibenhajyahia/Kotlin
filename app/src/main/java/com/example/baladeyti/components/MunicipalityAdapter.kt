@@ -39,7 +39,7 @@ class MunicipalityAdapter(
             idEmail = itemView.findViewById(R.id.idEmail)
             recyclerImage = itemView.findViewById(R.id.recyclerImage)
             val picStr: String = property.photos.toString()
-            val picStrr="http://192.168.1.7:3000/upload/"+picStr.split("/")[4]
+            val picStrr="https://baladeyti-application.herokuapp.com/upload/"+picStr.split("/")[4]
             println(picStrr)
             Glide.with(itemView).load(Uri.parse(picStrr)).into(recyclerImage)
             idName.text = property.name

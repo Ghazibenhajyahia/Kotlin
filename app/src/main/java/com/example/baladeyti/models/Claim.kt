@@ -11,6 +11,7 @@ data class Claim(
     var text: String? = null,
     var laltitude: String? = null,
     var longitude: String? = null,
+    val claims: List<Claim>?=null
 )
 data class ClaimRequest(
     var claim: Claim?=null,

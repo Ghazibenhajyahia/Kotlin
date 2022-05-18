@@ -24,7 +24,7 @@ interface ApiMunicipality {
         fun create(): ApiMunicipality {
             val retrofit = Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl("http://192.168.1.7:3000")
+                .baseUrl("https://baladeyti-application.herokuapp.com")
                 .build()
             return retrofit.create(ApiMunicipality::class.java)
 
