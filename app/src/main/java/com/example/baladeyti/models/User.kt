@@ -8,7 +8,7 @@ data class User(
     var birthdate: String? = null,
     val gender: String? = null,
     var civilStatus: String? = null,
-    var cin: Number? = null,
+    var cin: Number? = 100000,
     var password: String? = null,
     var photos: String? = null,
     var address: String? = null,

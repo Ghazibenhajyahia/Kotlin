@@ -39,6 +39,12 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:src="@drawable/ic_baseline_settings_24" />
+                    <ImageButton
+                        android:id="@+id/ic_profileDisconnect"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toLeftOf="@id/ic_profileSettings"
+                        android:src="@drawable/ic_exit" />
                 </RelativeLayout>
 
                 <TextView

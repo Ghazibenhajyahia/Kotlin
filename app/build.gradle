@@ -96,7 +96,10 @@ dependencies {
     implementation 'com.karumi:dexter:6.0.0'
     //gson
     implementation 'com.google.code.gson:gson:2.8.9'
-    
+
+    //lottie 
+    implementation 'it.xabaras.android:recyclerview-swipedecorator:1.2.3'
+    implementation 'com.airbnb.android:lottie:3.7.0'
 
 
 }

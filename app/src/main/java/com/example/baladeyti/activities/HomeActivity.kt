@@ -111,7 +111,7 @@ class HomeActivity : AppCompatActivity() {
 
             val drawerLayout: DrawerLayout = findViewById(R.id.drawerLayout)
 
-            val drawerNavView: NavigationView = findViewById(R.id.nav_view)
+            /*val drawerNavView: NavigationView = findViewById(R.id.nav_view)*/
 
             toggle = ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close)
             drawerLayout.addDrawerListener(toggle)
@@ -121,7 +121,7 @@ class HomeActivity : AppCompatActivity() {
             supportActionBar?.hide()
 
 
-            drawerNavView.setNavigationItemSelectedListener {
+        /*    drawerNavView.setNavigationItemSelectedListener {
                 when (it.itemId) {
                     R.id.ic_home -> {
                         Toast.makeText(applicationContext, "Clicked on Home", Toast.LENGTH_SHORT)
@@ -191,17 +191,17 @@ class HomeActivity : AppCompatActivity() {
                     ).show()
                 }
                 true
-            }
+            }*/
 
 
             //Getting from shared into drawer
-            val headerView: View = drawerNavView.getHeaderView(0)
+     /*       val headerView: View = drawerNavView.getHeaderView(0)*/
 
-            usernamedrawer = headerView.findViewById(R.id.usernamedrawer)
-
-            imagedrawer = headerView.findViewById(R.id.imagedrawer)
-
-            emaildrawer = headerView.findViewById(R.id.emaildrawer)
+//            usernamedrawer = headerView.findViewById(R.id.usernamedrawer)
+//
+//            imagedrawer = headerView.findViewById(R.id.imagedrawer)
+//
+//            emaildrawer = headerView.findViewById(R.id.emaildrawer)
 
 
             val email: String = mSharedPref.getString("emailAddress", "Ghazi@gmail.com").toString()

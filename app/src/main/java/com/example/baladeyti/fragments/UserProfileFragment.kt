@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.example.baladeyti.R
 import com.example.baladeyti.activities.EditProfileActivity
+import com.example.baladeyti.activities.MainActivity
 import com.google.android.material.imageview.ShapeableImageView
 
 
@@ -36,6 +37,7 @@ class UserProfileFragment : Fragment() {
     lateinit var idArticles: TextView
     lateinit var idcin: TextView
     lateinit var ic_profileSettings: ImageButton
+    lateinit var ic_profileDisconnect: ImageButton
 
 
     override fun onCreateView(
@@ -61,6 +63,8 @@ class UserProfileFragment : Fragment() {
 
         idcin = root.findViewById(R.id.idcin)
 
+        ic_profileDisconnect = root.findViewById(R.id.ic_profileDisconnect)
+
         ic_profileSettings = root.findViewById(R.id.ic_profileSettings)
 
         val email: String = mSharedPref.getString("emailAddress", "Ghazi@gmail.com").toString()
@@ -85,6 +89,14 @@ class UserProfileFragment : Fragment() {
 
         ic_profileSettings.setOnClickListener {
             Intent(activity, EditProfileActivity::class.java).also {
+                startActivity(it)
+            }
+        }
+        ic_profileDisconnect.setOnClickListener {
+
+            mSharedPref.edit().clear().commit()
+            println(mSharedPref)
+            Intent(activity, MainActivity::class.java).also {
                 startActivity(it)
             }
         }

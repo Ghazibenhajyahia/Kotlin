@@ -13,7 +13,10 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.airbnb.lottie.LottieAnimationView
 import com.example.baladeyti.R
+import com.example.baladeyti.activities.AboutUsActivity
+import com.example.baladeyti.activities.EditProfileActivity
 import com.example.baladeyti.components.MunicipalityAdapter
 import com.example.baladeyti.models.Municipality
 import com.example.baladeyti.services.ApiMunicipality
@@ -26,12 +29,13 @@ import retrofit2.Response
 
 class HomeFragment : Fragment()/*,MunicipalityAdapter.OnItemClickListener */{
     lateinit var mSharedPref: SharedPreferences
-
+    lateinit var animationView: LottieAnimationView
     private val favouritesFragment = FavouritesFragment()
     private val settingsFragment = SettingsFragment()
     lateinit var recyclerView: RecyclerView
     lateinit var complaintbtn: MaterialButton
     lateinit var newsbtn: MaterialButton
+    lateinit var nav_who: MaterialButton
     var filtredArticle: MutableList<Municipality> = arrayListOf()
     var articlesDispo: MutableList<Municipality> = arrayListOf()
     lateinit var test: MunicipalityAdapter.OnItemClickListener
@@ -48,12 +52,24 @@ class HomeFragment : Fragment()/*,MunicipalityAdapter.OnItemClickListener */{
 
         complaintbtn = view.findViewById(R.id.complaintbtn)
         newsbtn = view.findViewById(R.id.newsbtn)
+        nav_who = view.findViewById(R.id.nav_who)
+        animationView = view.findViewById(R.id.animationNoreponse)
+
+
+        animationView.playAnimation()
+        animationView.loop(true)
+        animationView.visibility = View.VISIBLE
 
         complaintbtn.setOnClickListener {
             makeCurrentFragement(favouritesFragment)
         }
         newsbtn.setOnClickListener {
             makeCurrentFragement(settingsFragment)
+        }
+        nav_who.setOnClickListener {
+            Intent(activity, AboutUsActivity::class.java).also {
+                startActivity(it)
+            }
         }
 //        recyclerView = view.findViewById(R.id.recycler_viewArticleList)
 //

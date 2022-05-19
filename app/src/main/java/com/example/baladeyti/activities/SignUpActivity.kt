@@ -12,6 +12,7 @@ import android.view.View
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.airbnb.lottie.LottieAnimationView
 import com.example.baladeyti.R
 import com.example.baladeyti.databinding.ActivitySignUpBinding
 import com.example.baladeyti.models.Claim
@@ -31,6 +32,7 @@ class SignUpActivity : AppCompatActivity() {
 
     lateinit var mSharedPref: SharedPreferences
     lateinit var signupbtn: MaterialButton
+    lateinit var animationNoreponse: LottieAnimationView
     private lateinit var email: EditText
     private lateinit var password: EditText
     private lateinit var confirmPassword: EditText
@@ -52,6 +54,10 @@ class SignUpActivity : AppCompatActivity() {
         email = findViewById(R.id.email)
         password = findViewById(R.id.password)
         confirmPassword = findViewById(R.id.confirmPassword)
+        animationNoreponse = findViewById(R.id.animationNoreponse)
+
+        animationNoreponse.playAnimation()
+        animationNoreponse.loop(true)
 
         signupbtn.setOnClickListener {
             if ( validateEmail() && validatePassword() && validateConfirmPassword()&& validatePasswordAndConfirmPassword()){

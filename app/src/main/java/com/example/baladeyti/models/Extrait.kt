@@ -6,7 +6,7 @@ data class Extrait(
     var birthdate: String? = null,
     val gender: String? = null,
     var civilStatus: String? = null,
-    var cin: Number? = null,
+    var cin: Number? = 1000000,
     var address: String? = null,
     var phoneNumber : String? = null
 

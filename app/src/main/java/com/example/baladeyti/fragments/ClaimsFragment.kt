@@ -8,8 +8,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.airbnb.lottie.LottieAnimationView
 import com.example.baladeyti.R
 import com.example.baladeyti.components.ArticleAdapter
 import com.example.baladeyti.components.ClaimAdapter
@@ -27,6 +29,8 @@ import retrofit2.Response
 class ClaimsFragment  : Fragment(), ClaimAdapter.OnItemClickListener{
     lateinit var mSharedPref: SharedPreferences
     private lateinit var _id: String
+    lateinit var animationView: LottieAnimationView
+    lateinit var textNotFound: TextView
     lateinit var recyclerView: RecyclerView
     var claimList: MutableList<Claim> = arrayListOf()
     lateinit var test: ClaimAdapter.OnItemClickListener
@@ -41,6 +45,8 @@ class ClaimsFragment  : Fragment(), ClaimAdapter.OnItemClickListener{
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_claims, container, false)
         recyclerView = view.findViewById(R.id.recycler_viewClaimList)
+        animationView = view.findViewById(R.id.animationNoreponse)
+        textNotFound = view.findViewById(R.id.textNotFound)
 
         mSharedPref = view.context!!.getSharedPreferences("UserPref", Context.MODE_PRIVATE)
 
@@ -52,7 +58,15 @@ class ClaimsFragment  : Fragment(), ClaimAdapter.OnItemClickListener{
         getNewsData { newss: List<Claim> ->
             claimList = newss as MutableList<Claim>
 
-            recyclerView.adapter = ClaimAdapter(newss, this,savedInstanceState,view.context)
+            if (newss.isEmpty()){
+                animationView.visibility = View.VISIBLE
+                animationView.playAnimation()
+                animationView.loop(true)
+                textNotFound.visibility = View.VISIBLE
+            }else{
+                recyclerView.adapter = ClaimAdapter(newss, this,savedInstanceState,view.context)
+            }
+
         }
 
 

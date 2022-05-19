@@ -39,6 +39,27 @@
                     android:layout_height="wrap_content"/>
             </LinearLayout>
         </LinearLayout>
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/animationNoreponse"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:visibility="gone"
+            android:layout_below="@id/textView1"
+            android:scaleType="centerCrop"
+            app:lottie_rawRes="@raw/notfound" />
+
+        <TextView
+            android:text="No Claims yet !"
+            android:id="@+id/textNotFound"
+            android:visibility="gone"
+            android:textColor="#7495FF"
+            android:textSize="33sp"
+            android:layout_gravity="center"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_viewClaimList"
             android:layout_width="match_parent"
@@ -48,6 +69,8 @@
 
             android:scrollbars="vertical"
             tools:itemCount="6" />
+
+
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content">

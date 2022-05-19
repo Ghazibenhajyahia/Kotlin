@@ -10,6 +10,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Toast
+import androidx.core.content.res.ResourcesCompat
+import com.airbnb.lottie.LottieAnimationView
 import com.example.baladeyti.R
 import com.example.baladeyti.components.Pdf
 import com.example.baladeyti.models.Extrait
@@ -18,11 +20,15 @@ import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
+import www.sanju.motiontoast.MotionToast
+import www.sanju.motiontoast.MotionToastStyle
 
 
 class ExtraitFragment : Fragment() {
 
     lateinit var mSharedPref: SharedPreferences
+    lateinit var animationView: LottieAnimationView
+    lateinit var animationViewArrow: LottieAnimationView
     lateinit var gender : String
     lateinit var lastName : String
     lateinit var firstName : String
@@ -30,7 +36,7 @@ class ExtraitFragment : Fragment() {
     lateinit var civilStatus : String
     lateinit var phone : String
     lateinit var birthdate : String
-    lateinit var cin : Number
+    lateinit var cin : String
 
 
     override fun onCreateView(
@@ -48,10 +54,34 @@ class ExtraitFragment : Fragment() {
         address= mSharedPref.getString("address", "address").toString()
         civilStatus = mSharedPref.getString("civilStatus", "address").toString()
         phone= mSharedPref.getString("phoneNumber", "phone").toString()
-        cin = mSharedPref.getString("cin", "cin")!!.toInt()
+        cin = mSharedPref.getString("cin", "10000000").toString()
         val confirm = view.findViewById<Button>(R.id.confirm)
+
+        animationView = view.findViewById(R.id.animationNoreponse)
+        animationViewArrow = view.findViewById(R.id.animationArrow)
+
+        animationView.playAnimation()
+        animationView.loop(true)
+        animationView.visibility = View.VISIBLE
+
+        animationViewArrow.playAnimation()
+        animationViewArrow.loop(true)
+        animationViewArrow.visibility = View.VISIBLE
+
         confirm.setOnClickListener {
             requestStoragePermission()
+            MotionToast.darkColorToast(
+                requireActivity(),
+                "Success ",
+                "Birth Certificate Generated",
+                MotionToastStyle.SUCCESS,
+                MotionToast.GRAVITY_TOP,
+                MotionToast.LONG_DURATION,
+                ResourcesCompat.getFont(
+                    requireActivity(),
+                    www.sanju.motiontoast.R.font.helvetica_regular
+                )
+            )
         }
 
         return view
@@ -66,7 +96,7 @@ class ExtraitFragment : Fragment() {
             birthdate,
             gender,
             civilStatus,
-            cin,
+            cin.toInt(),
             address,
             phone,
 
